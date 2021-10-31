@@ -1,4 +1,3 @@
-groups:
   - name: zerokspot
     rules:
       - alert: zerokspot--sys--down
