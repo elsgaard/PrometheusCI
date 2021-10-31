@@ -1,0 +1,19 @@
+rule_files:
+  - alert.rules.yaml
+
+tests:
+  - input_series:
+      - series: up{job="zerokspot-sys"}
+        values: 0
+
+    alert_rule_test:
+      - eval_time: 4m
+        alertname: zerokspot--sys--down
+        exp_alerts: []
+
+      - eval_time: 5m
+        alertname: zerokspot--sys--down
+        exp_alerts:
+          - exp_labels:
+              alertname: zerokspot--sys--down
+              job: zerokspot-sys
