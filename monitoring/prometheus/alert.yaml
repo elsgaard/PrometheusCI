@@ -1,10 +1,11 @@
 groups:
-- name: example
+- name: Hardware alerts
   rules:
-  - alert: HighRequestLatency
-    expr: job:request_latency_seconds:mean5m{job="myjob"} > 0.5
-    for: 10m
+  - alert: Node down
+    expr: up{job="node_exporter"} == 0
+    for: 3m
     labels:
-      severity: page
+      severity: warning
     annotations:
-      summary: High request latency
+      title: Node {{ $labels.instance }} is down
+      description: Failed to scrape {{ $labels.job }} on {{ $labels.instance }} for more than 3 minutes. Node seems down.
