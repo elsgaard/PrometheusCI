@@ -27,7 +27,9 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install git
-        run: apk update && apk add git
+        run: |
+          sudo apt update
+          sudo apt install git  
         
       - name: Fetch promtool
         run: GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go get -u github.com/prometheus/prometheus/cmd/promtool
