@@ -1,33 +1,11 @@
-name: Check Prometheus rules
-on:
-  push:
-    branches: [ main ]
-    paths:
-    - 'monitoring/prometheus/*.y*ml'
-  pull_request:
-    branches: [ main ]
-    paths:
-    - 'monitoring/prometheus/*.y*ml'
-    
-  workflow_dispatch:    
-  
+on: [push]
 jobs:
-  on-pull-request:
-    name: On Pull Request
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v2
-
-    - name: Check Prometheus rules
-      uses: beatlabs/promtool-github-action@v0.0.1
-      with:
-        cmd: 'check'
-        files: 'monitoring/prometheus/*.y*ml'
-
-    - name: Test Prometheus rules
-      uses: beatlabs/promtool-github-action@v0.0.1
-      with:
-        cmd: 'test'
-        files: 'monitoring/prometheus/test*.y*ml'
+    test-alert-rules:
+      runs-on: ubuntu-18.04
+      steps:
+      - name: 'Checkout'
+        uses: 'actions/checkout@v2'
+      - name: 'Run promtool tests'
+        uses: 'MatsuriJapon/promtool-action@v1'
+        with:
+          args: 'test rules $(find monitoring/prometheus -name *.yaml)'
