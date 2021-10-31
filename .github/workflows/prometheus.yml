@@ -1,9 +1,16 @@
 name: Check Prometheus rules
 on:
-  pull_request:
+  push:
+    branches: [ main ]
     paths:
     - 'monitoring/prometheus/*.y*ml'
-
+  pull_request:
+    branches: [ main ]
+    paths:
+    - 'monitoring/prometheus/*.y*ml'
+    
+  workflow_dispatch:    
+  
 jobs:
   on-pull-request:
     name: On Pull Request
